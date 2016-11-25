@@ -6,16 +6,13 @@
 
 ###修改了以上的2个问题：
 增加一个方法可以设置tab选中后位置，setIndicatorSelectedMode(TabPageIndicator.IndicatorSelectedMode.MODE_LEFT);
- ···java
- /**
-     * tab标题选中后所处的位置
-    */
+ 
     public enum IndicatorSelectedMode{
         MODE_LEFT,//在左边
         MODE_MIDDLE,//在中间
         MODE_NONE;//位置不动，如果选中的tab显示不完整，则让其显示完整，完全仿今日头条
     }
-```
+
 
 一个强大的顶部标题导航栏，支持6种不同的模式<br>
 
