@@ -1,11 +1,11 @@
 #TabPagerIndicator
 
-#原生库存在的问题
-##1.选中的tab只显示在左边，
-##2.从最后一个tab切到第一个tab时，所以tab会滚动一下，这样的体验不好
+##原生库存在的问题
+###1.选中的tab只显示在左边，
+###2.从最后一个tab切到第一个tab时，所以tab会滚动一下，这样的体验不好
 
-#修改了以上的2个问题：
-增加一个方法可以设置tab选中后位置，setIndicatorSelectedMode(TabPageIndicator.IndicatorSelectedMode.MODE_LEFT);
+###修改了以上的2个问题：
+###增加一个方法可以设置tab选中后位置，setIndicatorSelectedMode(TabPageIndicator.IndicatorSelectedMode.MODE_LEFT);
     /**
      * tab标题选中后所处的位置
     */
