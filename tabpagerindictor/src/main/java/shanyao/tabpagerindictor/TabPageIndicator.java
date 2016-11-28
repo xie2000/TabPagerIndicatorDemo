@@ -83,7 +83,7 @@ public class TabPageIndicator extends HorizontalScrollView {
 //    = R.drawable.background_tab;//字体颜色的选择器
 
     private Locale locale;
-    private IndicatorSelectedMode indicatorSelectedMode=IndicatorSelectedMode.MODE_NONE;
+    private IndicatorSelectedMode indicatorSelectedMode = IndicatorSelectedMode.MODE_NONE;
     private IndicatorMode currentIndicatorMode = IndicatorMode.MODE_WEIGHT_NOEXPAND_SAME;
 
     /**
@@ -111,7 +111,7 @@ public class TabPageIndicator extends HorizontalScrollView {
     /**
      * tab标题选中后所处的位置
      */
-    public enum IndicatorSelectedMode{
+    public enum IndicatorSelectedMode {
         MODE_LEFT,//在左边
         MODE_MIDDLE,//在中间
         MODE_NONE;//位置不动，如果选中的tab显示不完整，则让其显示完整，完全仿今日头条
@@ -192,8 +192,8 @@ public class TabPageIndicator extends HorizontalScrollView {
         }
     }
 
-    public void setIndicatorSelectedMode(IndicatorSelectedMode indicatorSelectedMode){
-        this.indicatorSelectedMode=indicatorSelectedMode;
+    public void setIndicatorSelectedMode(IndicatorSelectedMode indicatorSelectedMode) {
+        this.indicatorSelectedMode = indicatorSelectedMode;
     }
 
     // 根据不同的Mode设置不同的展现效果
@@ -466,13 +466,11 @@ public class TabPageIndicator extends HorizontalScrollView {
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            //System.out.println("*****************xie onPageScrolled position:" + position + ",positionOffset:" + positionOffset + ",positionOffsetPixels:" + positionOffsetPixels);
-
             currentPosition = position;
             currentPositionOffset = positionOffset;
-            if(indicatorSelectedMode==IndicatorSelectedMode.MODE_LEFT){
-                scrollToChild(position, (int) (positionOffset * tabsContainer.getChildAt(position).getWidth()));
-            }
+//            if (indicatorSelectedMode == IndicatorSelectedMode.MODE_LEFT) {
+//                scrollToChild(position, (int) (positionOffset * tabsContainer.getChildAt(position).getWidth()));
+//            }
 
             invalidate();
 
@@ -483,8 +481,6 @@ public class TabPageIndicator extends HorizontalScrollView {
 
         @Override
         public void onPageScrollStateChanged(int state) {
-            //System.out.println("*****************xie StateChanged state:" + state);
-
             if (state == ViewPager.SCROLL_STATE_IDLE) {
                 scrollToChild(pager.getCurrentItem(), 0);
             }
@@ -499,7 +495,14 @@ public class TabPageIndicator extends HorizontalScrollView {
             int[] rect = new int[2];
             tabsContainer.getChildAt(position).getLocationOnScreen(rect);
 
-            if(indicatorSelectedMode==IndicatorSelectedMode.MODE_NONE) {
+            if (indicatorSelectedMode == IndicatorSelectedMode.MODE_LEFT) {
+                //选中的item在左边第一个
+                smoothScrollTo(tabsContainer.getChildAt(position).getLeft(), 0);
+            } else if (indicatorSelectedMode == IndicatorSelectedMode.MODE_MIDDLE) {
+                //选中的item在中间
+                smoothScrollTo(tabsContainer.getChildAt(position).getLeft() - (getWidth() - tabsContainer.getChildAt(position).getWidth()) / 2, 0);
+            } else if (indicatorSelectedMode == IndicatorSelectedMode.MODE_NONE) {
+                //选中的item位置不动，如果选中的tab显示不完整，则让其显示完整，完全仿今日头条
                 if (rect[0] < 0) {
                     //选中的item左边显示不完整
                     smoothScrollTo(tabsContainer.getChildAt(position).getLeft(), 0);
@@ -507,8 +510,6 @@ public class TabPageIndicator extends HorizontalScrollView {
                     //选中的item右边显示不完整
                     smoothScrollTo(tabsContainer.getChildAt(position).getLeft() - (getWidth() - tabsContainer.getChildAt(position).getWidth()), 0);
                 }
-            }else  if(indicatorSelectedMode==IndicatorSelectedMode.MODE_MIDDLE){
-                smoothScrollTo(tabsContainer.getChildAt(position).getLeft() - (getWidth() - tabsContainer.getChildAt(position).getWidth())/2, 0);
             }
 
             invalidate();
